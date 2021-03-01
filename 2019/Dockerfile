@@ -1,14 +1,20 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
-RUN apt update 
-# libwebkit2gtk-4.0-37
-RUN apt install --yes \
-  libgtk2.0-0 libgtk-3-0 openjdk-8-jre libswt-webkit-gtk-4-jni evince
+RUN apt-get update && \
+  LC_ALL=C DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends \
+  libgtk2.0-0 libgtk-3-0 openjdk-8-jre libswt-webkit-gtk-4-jni evince language-pack-fr && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 ADD VaudTax_2019.tar.gz /app/
 RUN mv /app/*/* /app
-CMD ./vaudtax-2019
+COPY run .
+WORKDIR /home/vaudtax
 
-RUN adduser vaudtax 
-USER vaudtax 
+ENV LC_ALL=fr_CH.UTF-8 \
+  LANG=fr_CH.UTF-8 \
+  LANGUAGE=fr_CH
+
+ENTRYPOINT [ "/app/run" ]
+CMD [ "/app/vaudtax-2019" ]

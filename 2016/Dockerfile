@@ -1,15 +1,20 @@
 FROM ubuntu:16.04
 
-RUN apt update 
-RUN apt install --yes \
-  libgtk2.0-0 libgtk-3-0 openjdk-8-jre libwebkitgtk-1.0-0 evince firefox thunderbird-dev
+RUN apt-get update && \
+  DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends \
+  libgtk2.0-0 libgtk-3-0 openjdk-8-jre libwebkitgtk-1.0-0 evince firefox thunderbird-dev language-pack-fr && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 ADD VaudTax_2016.tar.gz /app/
 RUN mv /app/*/* /app
-CMD ./vaudtax-2016
+COPY run .
+WORKDIR /home/vaudtax
 
-ENV MOZILLA_FIVE_HOME=/usr/lib/firefox 
+ENV LC_ALL=fr_CH.UTF-8 \
+  LANG=fr_CH.UTF-8 \
+  LANGUAGE=fr_CH
 
-RUN adduser vaudtax 
-USER vaudtax 
+ENTRYPOINT [ "/app/run" ]
+CMD [ "/app/vaudtax-2016" ]
