@@ -16,8 +16,8 @@ To run from GitHub Container Registry:
 
 ```
 YEAR=2020
-docker pull chcr.io/sbrunner/vaudtax:${YEAR}
+docker pull ghcr.io/sbrunner/vaudtax:${YEAR}
 VAUDTAX_DOCUMENTS=${HOME}/Documents/vaudtax
 xhost +
-docker run --rm -ti --env=DISPLAY=${DISPLAY} --volume=/tmp/.X11-unix:/tmp/.X11-unix --volume=${VAUDTAX_DOCUMENTS}:/home/vaudtax chcr.io/sbrunner/vaudtax:${YEAR}
+docker run --rm -ti --env=DISPLAY=${DISPLAY} --volume=/tmp/.X11-unix:/tmp/.X11-unix --volume=${VAUDTAX_DOCUMENTS}:/home/vaudtax ghcr.io/sbrunner/vaudtax:${YEAR}
 ```
