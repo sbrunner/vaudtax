@@ -9,6 +9,19 @@ run:
 build:
 	docker build --tag=$(DOCKER_BASE):${YEAR} ${YEAR}
 
+.PHONY: get-sha
+get-sha:
+	curl https://vaudtax-dl.vd.ch/vaudtax${YEAR}/telechargement/linux/64bit/VaudTax_${YEAR}.SHA256 \
+		--output ${YEAR}/VaudTax_${YEAR}.SHA256
+	curl https://vaudtax-dl.vd.ch/vaudtax${YEAR}/telechargement/linux/64bit/VaudTax_${YEAR}.asc \
+		--output ${YEAR}/VaudTax_${YEAR}.asc
+
+.PHONY: get
+get: get-sha
+	curl https://vaudtax-dl.vd.ch/vaudtax${YEAR}/telechargement/linux/64bit/VaudTax_${YEAR}.tar.gz \
+		--output ${YEAR}/VaudTax_${YEAR}.tar.gz
+	cd ${YEAR}; sha256sum --check VaudTax_${YEAR}.SHA256
+
 .PHONY: push
 push:
 	docker push $(DOCKER_BASE):${YEAR}
