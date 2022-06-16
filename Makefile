@@ -1,9 +1,14 @@
 DOCKER_BASE=sbrunner/vaudtax
 
+
+.PHONY: rm-volumes
+rm-volumes:
+	docker volume rm vaudtax-$(YEAR)
+
 .PHONY: run
 run:
 	xhost +
-	docker run --rm -ti --env=DISPLAY=${DISPLAY} --volume=/tmp/.X11-unix:/tmp/.X11-unix --volume=${HOME}/Documents/vaudtax:/home/vaudtax $(DOCKER_BASE):${YEAR}
+	docker run --rm -ti --env=DISPLAY=${DISPLAY} --volume=vaudtax-$(YEAR):/home/vaudtax/VaudTax$(YEAR):rw --volume=/tmp/.X11-unix:/tmp/.X11-unix --volume=${HOME}/Documents/vaudtax:/home/vaudtax $(DOCKER_BASE):${YEAR} bash
 
 .PHONY: build
 build:
