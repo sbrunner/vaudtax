@@ -1,4 +1,5 @@
 DOCKER_BASE=sbrunner/vaudtax
+YEAR?=2022
 
 
 .PHONY: rm-volumes
