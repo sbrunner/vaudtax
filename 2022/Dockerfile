@@ -2,7 +2,7 @@ FROM ubuntu:22.04
 
 RUN apt-get update && \
   LC_ALL=C DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends \
-  libgtk2.0-0 libgtk-3-0 openjdk-11-jre libswt-webkit-gtk-4-jni evince language-pack-fr && \
+  libgtk2.0-0 libgtk-3-0 openjdk-11-jre libswt-webkit-gtk-4-jni evince language-pack-fr firefox && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
