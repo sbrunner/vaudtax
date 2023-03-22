@@ -9,7 +9,7 @@ rm-volumes:
 .PHONY: run
 run:
 	xhost +
-	docker run --rm -ti --env=DISPLAY=${DISPLAY} --ipc=host --volume=vaudtax-$(YEAR):/home/vaudtax/VaudTax$(YEAR):rw --volume=/tmp/.X11-unix:/tmp/.X11-unix --volume=${HOME}/Documents/vaudtax:/home/vaudtax $(DOCKER_BASE):${YEAR}
+	docker run --rm -ti --env=DISPLAY=${DISPLAY} --ipc=host --volume=vaudtax-$(YEAR):/app:rw --volume=/tmp/.X11-unix:/tmp/.X11-unix --volume=${HOME}/Documents/vaudtax:/home/vaudtax $(DOCKER_BASE):${YEAR}
 
 .PHONY: build
 build:
