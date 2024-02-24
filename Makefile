@@ -6,10 +6,14 @@ YEAR?=2022
 rm-volumes:
 	docker volume rm vaudtax-$(YEAR)
 
+.PHONY: bash
+bash:
+	docker run --rm -ti --env=DISPLAY=${DISPLAY} --ipc=host --volume=/tmp/.X11-unix:/tmp/.X11-unix --volume=${HOME}/Documents/vaudtax:/home/vaudtax $(DOCKER_BASE):${YEAR} bash
+
 .PHONY: run
 run:
 	xhost +
-	docker run --rm -ti --env=DISPLAY=${DISPLAY} --ipc=host --volume=/tmp/.X11-unix:/tmp/.X11-unix --volume=${HOME}/Documents/vaudtax:/home/vaudtax $(DOCKER_BASE):${YEAR} bash
+	docker run --rm -ti --env=DISPLAY=${DISPLAY} --ipc=host --volume=/tmp/.X11-unix:/tmp/.X11-unix --volume=${HOME}/Documents/vaudtax:/home/vaudtax $(DOCKER_BASE):${YEAR}
 
 .PHONY: build
 build:

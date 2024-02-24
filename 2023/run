@@ -1,0 +1,11 @@
+#!/bin/bash -ex
+
+USER_ID=$(ls -lahdn /home/vaudtax | awk {'print $3'})
+GROUP_ID=$(ls -lahdn /home/vaudtax | awk {'print $4'})
+USER_NAME=vaudtax
+
+chown -R $USER_ID:$GROUP_ID /home/$USER_NAME
+
+groupadd -g $GROUP_ID vaudtax
+useradd --uid $USER_ID --gid $GROUP_ID $USER_NAME
+su $USER_NAME -c "$@"
